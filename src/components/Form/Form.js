@@ -5,54 +5,54 @@ const FIRSNAME = 'Bond';
 const LASTNAME = 'James';
 const PASSWORD = '007';
 
+const FieldInput = props => {
+  return (
+    <p className="field">
+      <label className="field__label" htmlFor={props.inputName}>
+        <span className="field-label">{props.valueLabel}</span>
+      </label>
+      <input
+        className={`field__input field-input t-input-${props.inputName}`}
+        type="text"
+        name={props.inputName}
+        value={props.valueInput}
+        onChange={props.handleChange}
+      />
+      <span className={`field__error field-error t-error-${props.inputName}`}>
+        {props.errorCheck ? '' : `Нужно указать ${props.valueError}`}
+      </span>
+    </p>
+  );
+};
+
 const AuthForm = props => {
   return (
     <form className="form">
       <h1>Введите свои данные, агент</h1>
-      <p className="field">
-        <label className="field__label" htmlFor="firstname">
-          <span className="field-label">Имя</span>
-        </label>
-        <input
-          className="field__input field-input t-input-firstname"
-          type="text"
-          name="firstname"
-          value={props.firstName}
-          onChange={props.handleChangeFirstName}
-        />
-        <span className="field__error field-error t-error-firstname">
-          {props.firstNameCheck ? '' : 'Нужно указать имя'}
-        </span>
-      </p>
-      <p className="field">
-        <label className="field__label" htmlFor="lastname">
-          <span className="field-label">Фамилия</span>
-        </label>
-        <input
-          className="field__input field-input t-input-lastname"
-          type="text"
-          name="lastname"
-          value={props.lastName}
-          onChange={props.handleChangeSecondName}
-        />
-        <span className="field__error field-error t-error-lastname">
-          {props.lastNameCheck ? '' : 'Нужно указать фамилию'}
-        </span>
-      </p>
-      <p className="field">
-        <label className="field__label" htmlFor="password">
-          <span className="field-label">Пароль</span>
-        </label>
-        <input
-          className="field__input field-input t-input-password"
-          type="password"
-          value={props.passWord}
-          onChange={props.handleChangePassWord}
-        />
-        <span className="field__error field-error t-error-password">
-          {props.passWordCheck ? '' : 'Нужно указать пароль'}
-        </span>
-      </p>
+      <FieldInput
+        inputName="firstname"
+        valueLabel="Имя"
+        valueInput={props.firstName}
+        handleChange={props.handleChange}
+        errorCheck={props.firstNameCheck}
+        valueError="имя"
+      />
+      <FieldInput
+        inputName="lastname"
+        valueLabel="Фамилия"
+        valueInput={props.lastName}
+        handleChange={props.handleChange}
+        errorCheck={props.lastNameCheck}
+        valueError="фамилию"
+      />
+      <FieldInput
+        inputName="password"
+        valueLabel="Пароль"
+        valueInput={props.passWord}
+        handleChange={props.handleChange}
+        errorCheck={props.passWordCheck}
+        valueError="пароль"
+      />
       <div className="form__buttons">
         <input
           type="submit"
@@ -78,54 +78,58 @@ class Form extends React.Component {
 
   handleSubmitClick = e => {
     e.preventDefault();
+    let firstName = true;
+    let lastName = true;
+    let passWord = true;
+    let isLoggedIn = false;
     if (!(this.state.firstName === FIRSNAME)) {
-      this.setState({ firstNameCheck: false });
-    } else {
-      this.setState({ firstNameCheck: true });
+      firstName = false;
     }
-
     if (!(this.state.lastName === LASTNAME)) {
-      this.setState({ lastNameCheck: false });
-    } else {
-      this.setState({ lastNameCheck: true });
+      lastName = false;
     }
     if (!(this.state.passWord === PASSWORD)) {
-      this.setState({ passWordCheck: false });
-    } else {
-      this.setState({ passWordCheck: true });
+      passWord = false;
     }
-    let conditionLogged =
-      this.state.firstNameCheck &
-      this.state.lastNameCheck &
-      this.state.passWordCheck;
-    if (conditionLogged) {
-      this.setState({ isLoggedIn: true });
+    let authCondition = firstName & lastName & passWord;
+    if (authCondition) {
+      isLoggedIn = true;
     }
-  };
-
-  handleChangeFirstName = e => {
     this.setState({
-      firstName: e.target.value,
-      firstNameCheck: true,
-      lastNameCheck: true,
-      passWordCheck: true
+      firstNameCheck: firstName,
+      lastNameCheck: lastName,
+      passWordCheck: passWord,
+      isLoggedIn: isLoggedIn
     });
   };
-  handleChangeSecondName = e => {
-    this.setState({
-      lastName: e.target.value,
-      firstNameCheck: true,
-      lastNameCheck: true,
-      passWordCheck: true
-    });
-  };
-  handleChangePassWord = e => {
-    this.setState({
-      passWord: e.target.value,
-      firstNameCheck: true,
-      lastNameCheck: true,
-      passWordCheck: true
-    });
+  handleChange = e => {
+    switch (e.target.name) {
+      case 'firstname':
+        this.setState({
+          firstName: e.target.value,
+          firstNameCheck: true,
+          lastNameCheck: true,
+          passWordCheck: true
+        });
+        break;
+      case 'lastname':
+        this.setState({
+          lastName: e.target.value,
+          firstNameCheck: true,
+          lastNameCheck: true,
+          passWordCheck: true
+        });
+        break;
+      case 'password':
+        this.setState({
+          passWord: e.target.value,
+          firstNameCheck: true,
+          lastNameCheck: true,
+          passWordCheck: true
+        });
+        break;
+      default:
+    }
   };
   render() {
     let result;
@@ -139,9 +143,7 @@ class Form extends React.Component {
           lastNameCheck={this.state.lastNameCheck}
           passWordCheck={this.state.passWordCheck}
           handleSubmitClick={this.handleSubmitClick}
-          handleChangeFirstName={this.handleChangeFirstName}
-          handleChangeSecondName={this.handleChangeSecondName}
-          handleChangePassWord={this.handleChangePassWord}
+          handleChange={this.handleChange}
         />
       );
     } else {
