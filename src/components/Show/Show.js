@@ -1,14 +1,40 @@
 import React, { Component } from 'react';
 
+const PostSerial = props => {
+  return (
+    <div className="show">
+      <img className="show-image" src={props.urlfig} alt="" />
+      <h2 className="show-label t-show-name">{props.name}</h2>
+      <p className="show-text t-show-genre">
+        <b>Жанр: </b> {props.genre}
+      </p>
+      <p className="show-text t-show-summary">{props.summary}</p>
+    </div>
+  );
+};
 class Show extends Component {
+  state = {
+    showId: this.props.showId,
+    data: {}
+  };
+
+  componentDidUpdate() {
+    let url = `http://api.tvmaze.com/singlesearch/shows?q=${this.props.showId}`;
+    console.log(url);
+    fetch(url)
+      .then(res => res.json())
+      .then(film => this.setState({ data: film }));
+  }
+
   render() {
-    return (
-      <div className="show">
-        <img className="show-image" src="" alt="" />
-        <h2 className="show-label t-show-name"></h2>
-        
-      </div>
-    );
+    return this.state.data.length ? (
+      <PostSerial
+        urlfig={this.state.data.image.medium}
+        name={this.state.data.name}
+        genre={this.state.data.genres.toString()}
+        summary={this.state.data.summary}
+      />
+    ) : null;
   }
 }
 
