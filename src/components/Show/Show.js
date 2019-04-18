@@ -19,15 +19,16 @@ class Show extends Component {
     data: {}
   };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.showId !== prevProps.showId) {
-      let url = `http://api.tvmaze.com/singlesearch/shows?q=${
+componentDidMount() {
+  console.log(this.props.showId);
+  if (this.props.showId){
+       let url = `http://api.tvmaze.com/singlesearch/shows?q=${
         this.props.showId
       }`;
       fetch(url)
         .then(res => res.json())
-        .then(film => this.setState({ showId: this.props.showId, data: film }));
-    }
+        .then(film => this.setState({ showId: this.props.showId, data: film }));}
+    
   }
 
   render() {
