@@ -14,20 +14,26 @@ const PostSerial = props => {
 };
 class Show extends Component {
   state = {
-    showId: this.props.showId,
+    showId: '',
     data: {}
   };
 
-  componentDidUpdate() {
-    let url = `http://api.tvmaze.com/singlesearch/shows?q=${this.props.showId}`;
-    console.log(url);
-    fetch(url)
-      .then(res => res.json())
-      .then(film => this.setState({ data: film }));
+  componentDidUpdate(prevProps) {
+    if (this.props.showId !== prevProps.showId) {
+      this.setState({ showId: this.props.showId });
+      let url = `http://api.tvmaze.com/singlesearch/shows?q=${
+        this.props.showId
+      }`;
+      console.log(url);
+      fetch(url)
+        .then(res => res.json())
+        .then(film => this.setState({ data: film }));
+    }
   }
 
   render() {
-    return this.state.data.length ? (
+    console.log(this.state.data);
+    return Object.keys(this.state.data).length ? (
       <PostSerial
         urlfig={this.state.data.image.medium}
         name={this.state.data.name}
