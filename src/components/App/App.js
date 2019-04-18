@@ -15,12 +15,12 @@ const radioGroup = [
   },
   {
     name: 'Santa Barbara',
-    apiKey: 'santaBarbara',
+    apiKey: 'santa-barbara',
     image: santaBarbaraImage
   },
   {
     name: 'The Big Bang Theory',
-    apiKey: 'bigBang',
+    apiKey: 'the-big-bang-theory',
     image: bigBangImage
   }
 ];
