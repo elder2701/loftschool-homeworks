@@ -19,18 +19,19 @@ class Show extends Component {
     data: {}
   };
 
-  static getDerivedStateFromState(nextProps, prevState) {
-    console.log(nextProps, prevState);
-    if (nextProps.showId !== prevState.showId) {
-      console.log(nextProps, prevState);
-      return { showId: nextProps.showId };
+  static getDerivedStateFromProps(props, state) {
+    console.log(props, state);
+    if (props.showId !== state.showId) {
+      console.log(props, state);
+      return { showId: props.showId };
     }
+    return null;
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.showId !== prevProps.showId) {
+    if (this.state.showId !== prevProps.showId) {
       let url = `http://api.tvmaze.com/singlesearch/shows?q=${
-        this.props.showId
+        this.state.showId
       }`;
       fetch(url)
         .then(res => res.json())
