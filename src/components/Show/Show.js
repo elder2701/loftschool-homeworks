@@ -40,14 +40,19 @@ class Show extends Component {
   }
 
   render() {
+    const regExpression = /<\/*[a-z]>/g;
+    let sumStr;
+    if  (this.state.data.summary) {
+      sumStr = this.state.data.summary.replace(regExpression, "");
+    }
     return Object.keys(this.state.data).length ? (
       <PostSerial
         urlfig={this.state.data.image.medium}
         name={this.state.data.name}
         genre={this.state.data.genres.toString()}
-        summary={this.state.data.summary}
+        summary={sumStr}
       />
-    ) : null;
+    ) : <div className>Шоу не выбрано</div>;
   }
 }
 
