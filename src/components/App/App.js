@@ -11,16 +11,19 @@ const radioGroup = [
   {
     name: 'House M.D.',
     apiKey: 'house',
+    classKey: 'house',
     image: houseImage
   },
   {
     name: 'Santa Barbara',
     apiKey: 'santa-barbara',
+    classKey: 'santaBarbara',
     image: santaBarbaraImage
   },
   {
     name: 'The Big Bang Theory',
     apiKey: 'the-big-bang-theory',
+    classKey: 'bigBang',
     image: bigBangImage
   }
 ];
@@ -49,7 +52,7 @@ class App extends PureComponent {
             >
               <input
                 id={radioInfo.apiKey}
-                className={`radio-input t-radio-input-${radioInfo.apiKey}`}
+                className={`radio-input t-radio-input-${radioInfo.classKey}`}
                 type="radio"
                 name="show"
                 value={radioInfo.apiKey}
