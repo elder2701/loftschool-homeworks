@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 
-const PostSerial = props => {
+const PostSerial = ({ urlfig, name, genre, summary }) => {
   return (
     <div className="show">
-      <img className="show-image" src={props.urlfig} alt="" />
-      <h2 className="show-label t-show-name">{props.name}</h2>
-      <p className="show-text t-show-genre">
-        <b>Жанр: </b> {props.genre}
-      </p>
-      <p className="show-text t-show-summary">{props.summary}</p>
+      <img className="show-image" src={urlfig} alt="" />
+      <h2 className="show-label t-show-name">{name}</h2>
+      <p className="show-text t-show-genre">{genre}</p>
+      <p className="show-text t-show-summary">{summary}</p>
     </div>
   );
 };
@@ -16,13 +14,11 @@ const PostSerial = props => {
 class Show extends Component {
   state = {
     showId: '',
-    data: {}
+    data: null
   };
 
   static getDerivedStateFromProps(props, state) {
-    console.log(props, state);
     if (props.showId !== state.showId) {
-      console.log(props, state);
       return { showId: props.showId };
     }
     return null;
@@ -40,19 +36,20 @@ class Show extends Component {
   }
 
   render() {
+    if (!this.state.data)
+      return <p className="show-inforation t-show-info">Шоу не выбрано</p>;
+    const { summary, image, name, genres } = this.state.data;
     const regExpression = /<\/*[a-z]>/g;
-    let sumStr;
-    if  (this.state.data.summary) {
-      sumStr = this.state.data.summary.replace(regExpression, "");
-    }
-    return Object.keys(this.state.data).length ? (
+    let sumStr = summary.replace(regExpression, '');
+    let genStr = 'Жанр: ' + genres.toString().replace(/,/g, ', ');
+    return (
       <PostSerial
-        urlfig={this.state.data.image.medium}
-        name={this.state.data.name}
-        genre={this.state.data.genres.toString()}
+        urlfig={image.medium}
+        name={name}
+        genre={genStr}
         summary={sumStr}
       />
-    ) : <div className>Шоу не выбрано</div>;
+    );
   }
 }
 
