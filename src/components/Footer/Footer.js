@@ -5,18 +5,15 @@ import './Footer.css';
 class Footer extends PureComponent {
   render() {
     return (
-      <footer className="footer">
-        {this.props.children}
-        <AuthConsumer>
-          {({ isAuthorized, email }) => {
-            return isAuthorized ? (
-              <p className="footer-message t-footer">Вы вошли как {email}</p>
-            ) : (
-              <p className="footer-message t-footer">Вы гость в этой системе</p>
-            );
-          }}
-        </AuthConsumer>
-      </footer>
+      <AuthConsumer>
+        {({ isAuthorized, email }) => {
+          return isAuthorized ? (
+            <p className="footer-message t-footer">Вы вошли как {email}</p>
+          ) : (
+            <p className="footer-message t-footer">Вы гость в этой системе</p>
+          );
+        }}
+      </AuthConsumer>
     );
   }
 }
