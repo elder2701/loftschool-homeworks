@@ -5,7 +5,7 @@ import './Layout.css';
 class Layout extends PureComponent {
   render() {
     const { header, footer, children } = this.props;
-    console.log(this.props);
+
     const HeaderLayout = this.renderHeader(header);
     const FooterLayout = this.renderFooter(footer);
     return (
