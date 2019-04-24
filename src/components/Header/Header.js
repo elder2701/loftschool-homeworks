@@ -9,12 +9,12 @@ class Header extends PureComponent {
       <header className="header">
         {this.props.children}
         <AuthConsumer>
-          {({ isAuthorized, logout }) => {
+          {({ isAuthorized, logout, email }) => {
             return isAuthorized ? (
               <div className="header__content">
                 <div className="header-menu">
                   <p className="header-menu__email header-email t-header-email">
-                    test@test.ru
+                    {email}
                   </p>
                   <Button
                     onClick={logout}
