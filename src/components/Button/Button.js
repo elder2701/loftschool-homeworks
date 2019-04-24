@@ -3,7 +3,8 @@ import './Button.css';
 
 class Button extends PureComponent {
   render() {
-    const { className, children, ...rest } = this.props;
+    const { logout, className, children, ...rest } = this.props;
+    console.log(...rest);
     return (
       <button {...rest} className={`${className} button`}>
         {children}

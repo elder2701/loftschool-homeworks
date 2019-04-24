@@ -4,7 +4,7 @@ import './Layout.css';
 
 class Layout extends PureComponent {
   render() {
-    const { header, footer } = this.props;
+    const { header, footer, children } = this.props;
     console.log(this.props);
     const HeaderLayout = this.renderHeader(header);
     const FooterLayout = this.renderFooter(footer);
@@ -13,6 +13,7 @@ class Layout extends PureComponent {
         <HeaderLayout />
         <main className="main main--with-header main--with-footer">
           <SectionTitle className="main__title">MAIN</SectionTitle>
+          {children}
         </main>
         <FooterLayout />
       </Fragment>
@@ -21,19 +22,17 @@ class Layout extends PureComponent {
 
   renderHeader(HeaderChild) {
     return () => (
-      <header className="header">
+      <HeaderChild>
         <SectionTitle className="header__title">HEADER</SectionTitle>
-        <HeaderChild />
-      </header>
+      </HeaderChild>
     );
   }
 
   renderFooter(FooterChild) {
     return () => (
-      <footer className="footer">
-        <SectionTitle className="footer__title">FOTTER</SectionTitle>
-        <FooterChild />
-      </footer>
+      <FooterChild>
+        <SectionTitle className="footer__title">FOOTER</SectionTitle>
+      </FooterChild>
     );
   }
 }
