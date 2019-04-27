@@ -5,7 +5,8 @@ import withLocalstorage from '../../HOCs/withLocalstorage';
 
 class Todo extends PureComponent {
   state = {
-    inputValue: ''
+    inputValue: '',
+    toggleValues: {}
   };
 
   getId() {
@@ -14,16 +15,61 @@ class Todo extends PureComponent {
     return biggest + 1;
   }
 
-  handleChange = event => {};
+  handleChange = e => {
+    let changeValue = e.target.value;
+    this.setState({ inputValue: changeValue });
+  };
 
-  createNewRecordByEnter = event => {};
+  createNewRecordByEnter = e => {
+    let { saveData } = this.props;
+    if (e.key === 'Enter') {
+      saveData({ id: this.getId, isComplete: false, text: e.target.value });
+      this.setState({ inputValue: '' });
+    }
+  };
 
-  toggleRecordComplete = event => {};
+  toggleRecordComplete = e => {
+    let toggleValue = e.target.value;
+  };
 
-  createNewRecord = () => {};
+  createNewRecord = () => {
+    this.setState({ inputValue: '' });
+  };
 
   render() {
-    return;
+    let { savedData } = this.props;
+    console.log(savedData);
+    let records = savedData.map(record => (
+      <div key={record.id.toString()} className="todo-item t-todo">
+        <p className="todo-item__text">{record.text}</p>
+        <span
+          className="todo-item__flag t-todo-complete-flag"
+          onClick={this.toggleRecordComplete}
+          data-todo-id={record.id.toString()}
+        >
+          {record.isComplete ? '[]' : '[X]'}
+        </span>
+      </div>
+    ));
+    return (
+      <Card title="Список дел">
+        <div className="todo t-todo-list">
+          <div className="todo-item todo-item-new">
+            <input
+              className="todo-input t-input"
+              placeholder="Введите задачу"
+              value={this.state.inputValue}
+              onChange={this.handleChange}
+              onKeyPress={this.createNewRecordByEnter}
+            />
+            <span onClick={this.createNewRecord} className="plus t-plus">
+              +
+            </span>
+          </div>
+          {records}
+        </div>
+      </Card>
+    );
   }
 
   renderEmptyRecord() {
