@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Card from '../Card';
+import Record from '../Record';
 import './Todo.css';
 import withLocalstorage from '../../HOCs/withLocalstorage';
 
@@ -41,20 +42,10 @@ class Todo extends PureComponent {
   };
 
   render() {
-    let { savedData } = this.props;
+    let { savedData, saveData } = this.props;
     let records = savedData.map(record => (
-      <div key={record.id.toString()} className="todo-item t-todo">
-        <p className="todo-item__text">{record.text}</p>
-        <span
-          className="todo-item__flag t-todo-complete-flag"
-          onClick={this.toggleRecordComplete}
-          data-todo-id={record.id.toString()}
-        >
-          {record.isComplete ? '[]' : '[X]'}
-        </span>
-      </div>
+      <Record {...record} saveData={saveData} />
     ));
-
     let { inputValue } = this.state;
     return (
       <Card title="Список дел">
