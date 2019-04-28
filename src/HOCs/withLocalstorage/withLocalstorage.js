@@ -11,6 +11,7 @@ const withLocalstorage = (name, data) => Todo => {
       const { todoList } = this.state;
       const updateList = [...todoList, dataSave];
       this.setState({ todoList: updateList });
+      console.log(updateList);
       save(name, updateList);
     };
 
@@ -23,17 +24,18 @@ const withLocalstorage = (name, data) => Todo => {
         }
       }
       this.setState({ todoList });
-      save(name, this.state.todoList);
+      console.log(todoList);
+      save(name, todoList);
     };
 
     componentDidMount() {
       let todo = load(name);
       if (!todo) {
         save(name, data);
-      } else {
-        todo = data;
       }
-      this.setState({ todoList: todo });
+      if (todo) {
+        this.setState({ todoList: todo });
+      }
     }
 
     render() {
