@@ -2,23 +2,30 @@ import React, { Component } from 'react';
 import { load, save } from '../../localstorage';
 
 const withLocalstorage = (name, data) => Todo => {
-  //save(name, data);
   return class extends Component {
     state = {
-      newValue: {}
+      todoList: data
     };
 
     handleSaveData = dataSave => {
-      this.setState({ newValue: dataSave });
+      let { todoList } = this.state;
+      this.setState({ todoList: todoList.push(dataSave) });
     };
 
+    componentDidMount() {
+      let todo = load(name);
+      this.setState(todo);
+      console.log('hello1');
+    }
+
+    componentWillUnmount() {
+      let { todoList } = this.state;
+      save(name, todoList);
+    }
+
     render() {
-      save(name, this.state.newValue);
-      this.setState({ newValue: {} });
-      let dataFromStorage = load(name);
-      return (
-        <Todo savedData={dataFromStorage} saveData={this.handleSaveData} />
-      );
+      let { todoList } = this.state;
+      return <Todo savedData={todoList} saveData={this.handleSaveData} />;
     }
   };
 };

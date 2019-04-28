@@ -23,22 +23,25 @@ class Todo extends PureComponent {
   createNewRecordByEnter = e => {
     let { saveData } = this.props;
     if (e.key === 'Enter') {
-      saveData({ id: this.getId, isComplete: false, text: e.target.value });
+      let { inputValue } = this.state;
+      if (inputValue) {
+        saveData({ id: this.getId, isComplete: false, text: inputValue });
+        this.setState({ inputValue: '' });
+      }
+    }
+  };
+
+  createNewRecord = e => {
+    let { saveData } = this.props;
+    let { inputValue } = this.state;
+    if (inputValue) {
+      saveData({ id: this.getId(), isComplete: false, text: inputValue });
       this.setState({ inputValue: '' });
     }
   };
 
-  toggleRecordComplete = e => {
-    let toggleValue = e.target.value;
-  };
-
-  createNewRecord = () => {
-    this.setState({ inputValue: '' });
-  };
-
   render() {
     let { savedData } = this.props;
-    console.log(savedData);
     let records = savedData.map(record => (
       <div key={record.id.toString()} className="todo-item t-todo">
         <p className="todo-item__text">{record.text}</p>
@@ -51,6 +54,8 @@ class Todo extends PureComponent {
         </span>
       </div>
     ));
+
+    let { inputValue } = this.state;
     return (
       <Card title="Список дел">
         <div className="todo t-todo-list">
@@ -58,7 +63,7 @@ class Todo extends PureComponent {
             <input
               className="todo-input t-input"
               placeholder="Введите задачу"
-              value={this.state.inputValue}
+              value={inputValue}
               onChange={this.handleChange}
               onKeyPress={this.createNewRecordByEnter}
             />
@@ -71,14 +76,6 @@ class Todo extends PureComponent {
       </Card>
     );
   }
-
-  renderEmptyRecord() {
-    return;
-  }
-
-  renderRecord = record => {
-    return;
-  };
 }
 
 export default withLocalstorage('todo-app', [])(Todo);
