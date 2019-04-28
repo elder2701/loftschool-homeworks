@@ -8,24 +8,40 @@ const withLocalstorage = (name, data) => Todo => {
     };
 
     handleSaveData = dataSave => {
-      let { todoList } = this.state;
-      this.setState({ todoList: todoList.push(dataSave) });
+      const { todoList } = this.state;
+      this.setState({ todoList: [...todoList, dataSave] });
+      save(name, this.state.todoList);
+    };
+
+    handleUpdateData = dataUpdate => {
+      const { todoList } = this.state;
+      const { id, isComplete, text } = dataUpdate;
+      for (let i = 0; i < todoList.length; i++) {
+        if (id === todoList[i].id) {
+          todoList[i] = { id, text, isComplete };
+        }
+      }
+      this.setState({ todoList });
+      save(name, this.state.todoList);
     };
 
     componentDidMount() {
       let todo = load(name);
-      this.setState(todo);
-      console.log('hello1');
-    }
-
-    componentWillUnmount() {
-      let { todoList } = this.state;
-      save(name, todoList);
+      if (!todo) {
+        save(name, data);
+      }
+      this.setState({ todoList: todo });
     }
 
     render() {
       let { todoList } = this.state;
-      return <Todo savedData={todoList} saveData={this.handleSaveData} />;
+      return (
+        <Todo
+          savedData={todoList}
+          saveData={this.handleSaveData}
+          updateData={this.handleUpdateData}
+        />
+      );
     }
   };
 };

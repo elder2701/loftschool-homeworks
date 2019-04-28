@@ -12,6 +12,7 @@ class Todo extends PureComponent {
 
   getId() {
     const { savedData } = this.props;
+    if (!savedData) return 0;
     const biggest = savedData.reduce((acc, el) => Math.max(acc, el.id), 0);
     return biggest + 1;
   }
@@ -26,7 +27,7 @@ class Todo extends PureComponent {
     if (e.key === 'Enter') {
       let { inputValue } = this.state;
       if (inputValue) {
-        saveData({ id: this.getId, isComplete: false, text: inputValue });
+        saveData({ id: this.getId(), isComplete: false, text: inputValue });
         this.setState({ inputValue: '' });
       }
     }
@@ -42,10 +43,14 @@ class Todo extends PureComponent {
   };
 
   render() {
-    let { savedData, saveData } = this.props;
-    let records = savedData.map(record => (
-      <Record {...record} saveData={saveData} />
-    ));
+    const { savedData, updateData } = this.props;
+    let records = null;
+
+    if (savedData) {
+      records = savedData.map(record => (
+        <Record key={record.id} {...record} updateData={updateData} />
+      ));
+    }
     let { inputValue } = this.state;
     return (
       <Card title="Список дел">

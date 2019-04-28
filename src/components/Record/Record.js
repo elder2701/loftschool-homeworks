@@ -7,28 +7,23 @@ class Record extends PureComponent {
   };
 
   handleClick = () => {
-    let { isComplete } = this.state;
-    let { id, text, saveData } = this.props;
-    if (isComplete) {
-      this.setState({ isComplete: false });
-    } else {
-      this.setState({ isComplete: true });
-    }
-    saveData({ id: id, isComplete: isComplete, text: text });
+    const { isComplete } = this.state;
+    const { id, text, updateData } = this.props;
+    this.setState({ isComplete: !isComplete });
+    updateData({ id, isComplete, text });
   };
 
   render() {
-    let { id, text } = this.props;
-    let { isComplete } = this.state;
+    const { text } = this.props;
+    const { isComplete } = this.state;
     return (
-      <div key={id.toString()} className="todo-item t-todo">
+      <div className="todo-item t-todo">
         <p className="todo-item__text">{text}</p>
         <span
           onClick={this.handleClick}
           className="todo-item__flag t-todo-complete-flag"
-          data-todo-id={id.toString()}
         >
-          {this.isComplete ? '[]' : '[X]'}
+          {isComplete ? '[X]' : '[]'}
         </span>
       </div>
     );
