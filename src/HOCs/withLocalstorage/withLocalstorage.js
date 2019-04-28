@@ -9,8 +9,9 @@ const withLocalstorage = (name, data) => Todo => {
 
     handleSaveData = dataSave => {
       const { todoList } = this.state;
-      this.setState({ todoList: [...todoList, dataSave] });
-      save(name, this.state.todoList);
+      const updateList = [...todoList, dataSave];
+      this.setState({ todoList: updateList });
+      save(name, updateList);
     };
 
     handleUpdateData = dataUpdate => {
@@ -29,6 +30,8 @@ const withLocalstorage = (name, data) => Todo => {
       let todo = load(name);
       if (!todo) {
         save(name, data);
+      } else {
+        todo = data;
       }
       this.setState({ todoList: todo });
     }

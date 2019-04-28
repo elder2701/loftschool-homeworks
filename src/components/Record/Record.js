@@ -10,7 +10,7 @@ class Record extends PureComponent {
     const { isComplete } = this.state;
     const { id, text, updateData } = this.props;
     this.setState({ isComplete: !isComplete });
-    updateData({ id, isComplete, text });
+    updateData({ id, isComplete: !isComplete, text });
   };
 
   render() {
