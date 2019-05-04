@@ -4,50 +4,64 @@
 
 // Когда пользователь авторизован - перенаправьте его на роут /app
 import React, { Component } from 'react';
+import { withAuth } from '../../context/Auth';
 
 class LoginForm extends Component {
   state = {
     login: '',
-    password: '',
-    isError: false
+    password: ''
   };
 
   handleChange = e => {
-    console.log(e);
+    const classNameInput = e.target.className.split(' ')[1];
+    if (classNameInput === 't-input-email') {
+      this.setState({ login: e.target.value });
+    } else if (classNameInput === 't-input-password') {
+      this.setState({ password: e.target.value });
+    }
   };
 
+  handleClick = () => {
+    let { authorize } = this.props;
+    let { login, password } = this.state;
+    authorize(login, password);
+  };
   render() {
-    const { login, password, isError } = this.state;
+    const { login, password } = this.state;
+    const { authError } = this.props;
+
     return (
       <div className="bg">
         <div className="form t-form">
           <p>
-            <lable for="email">
+            <label htmlFor="email">
               <span className="labelText">Почта</span>
               <input
                 type="text"
                 name="email"
-                class="input t-input-email"
+                className="input t-input-email"
                 value={login}
                 onChange={this.handleChange}
               />
-            </lable>
+            </label>
           </p>
           <p>
-            <lable for="password">
-              <span className="labelText">Почта</span>
+            <label htmlFor="password">
+              <span className="labelText">Пароль</span>
               <input
                 type="password"
                 name="password"
-                class="input t-input-password"
+                className="input t-input-password"
                 value={password}
-                onChange={this.onChange}
+                onChange={this.handleChange}
               />
-            </lable>
+            </label>
           </p>
-          {isError ? <p className="error">Почта или пороль неверны</p> : null}
+          {authError ? <p>{authError}</p> : null}
           <div className="buttons">
-            <button className="button t-login">Войти</button>
+            <button onClick={this.handleClick} className="button t-login">
+              Войти
+            </button>
           </div>
         </div>
       </div>
@@ -55,4 +69,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default withAuth(LoginForm);
