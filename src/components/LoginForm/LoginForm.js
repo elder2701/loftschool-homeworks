@@ -35,10 +35,10 @@ class LoginForm extends Component {
       <Redirect to="/app" />
     ) : (
       <div className={styles.bg}>
-        <div className="form t-form">
+        <div className={styles.form + ' t-form'}>
           <p>
             <label htmlFor="email">
-              <span className="labelText">Почта</span>
+              <span className={styles.labelText}>Почта</span>
               <input
                 type="text"
                 name="email"
@@ -50,7 +50,7 @@ class LoginForm extends Component {
           </p>
           <p>
             <label htmlFor="password">
-              <span className="labelText">Пароль</span>
+              <span className={styles.labelText}>Пароль</span>
               <input
                 type="password"
                 name="password"
@@ -60,9 +60,12 @@ class LoginForm extends Component {
               />
             </label>
           </p>
-          {authError ? <p>{authError}</p> : null}
-          <div className="buttons">
-            <button onClick={this.handleClick} className="button t-login">
+          {authError ? <p className={styles.error}>{authError}</p> : null}
+          <div className={styles.buttons}>
+            <button
+              onClick={this.handleClick}
+              className={styles.button + ' t-login'}
+            >
               Войти
             </button>
           </div>
