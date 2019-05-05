@@ -10,7 +10,7 @@
 // Так же в этом файле обьявите лейаут,
 // используйте стили из AppRouter.module.css
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import Home from '../Home';
 import InboxList from '../InboxList';
 import InboxMail from '../InboxMail';
@@ -24,15 +24,16 @@ class AppRouter extends Component {
         <div className="container">
           <nav className="nav">
             <ul className="navList">
-              {/*<li className="navElement" /> добавить элементы навигации*/}
-              <li classname="navElement">
-                <Link to="/app">Home</Link>
+              <li className="navElement">
+                <NavLink exact to="/app">
+                  Home
+                </NavLink>
               </li>
-              <li classname="navElement">
-                <Link to="/app/inbox">Inbox</Link>
+              <li className="navElement">
+                <NavLink to="/app/inbox">Inbox</NavLink>
               </li>
-              <li classname="navElement">
-                <Link to="/app/outbox">Outbox</Link>
+              <li className="navElement">
+                <NavLink to="/app/outbox">Outbox</NavLink>
               </li>
             </ul>
           </nav>
