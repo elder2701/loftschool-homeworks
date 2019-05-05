@@ -5,6 +5,8 @@
 // Когда пользователь авторизован - перенаправьте его на роут /app
 import React, { Component } from 'react';
 import { withAuth } from '../../context/Auth';
+import { Redirect } from 'react-router-dom';
+import styles from './LoginForm.module.css';
 
 class LoginForm extends Component {
   state = {
@@ -28,10 +30,11 @@ class LoginForm extends Component {
   };
   render() {
     const { login, password } = this.state;
-    const { authError } = this.props;
-
-    return (
-      <div className="bg">
+    const { authError, isAuthorized } = this.props;
+    return isAuthorized ? (
+      <Redirect to="/app" />
+    ) : (
+      <div className={styles.bg}>
         <div className="form t-form">
           <p>
             <label htmlFor="email">
