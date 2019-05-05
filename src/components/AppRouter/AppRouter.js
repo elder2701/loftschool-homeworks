@@ -1,55 +1,51 @@
-// Реализуйте роутер приложения.
-// Здесь должны быть обьявлены роуты,
-// которые будут доступны авторизованному пользователю.
-// - Home
-// - InboxList
-// - InboxMail
-// - OutboxList
-// - OutboxMail
-
-// Так же в этом файле обьявите лейаут,
-// используйте стили из AppRouter.module.css
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { Switch, Route, NavLink, Redirect, withRouter } from 'react-router-dom';
+import styles from './AppRouter.module.css';
 import Home from '../Home';
 import InboxList from '../InboxList';
-import InboxMail from '../InboxMail';
+// import InboxMail from '../InboxMail';
 import OutboxList from '../OutboxList';
-import OutboxMail from '../OutboxMail';
+// import OutboxMail from '../OutboxMail';
 
 class AppRouter extends Component {
   render() {
+    console.log(this.props);
     return (
-      <div className="wrapper">
-        <div className="container">
-          <nav className="nav">
-            <ul className="navList">
-              <li className="navElement">
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <nav className={styles.nav}>
+            <ul className={styles.navList}>
+              <li className={styles.navElement}>
                 <NavLink exact to="/app">
                   Home
                 </NavLink>
               </li>
-              <li className="navElement">
+              <li className={styles.navElement}>
                 <NavLink exact to="/app/inbox">
                   Inbox
                 </NavLink>
               </li>
-              <li className="navElement">
+              <li className={styles.navElement}>
                 <NavLink exact to="/app/outbox">
                   Outbox
                 </NavLink>
               </li>
             </ul>
           </nav>
-          <div className="content">
-            <h3 className="title" />
-            <BrowserRouter>
+          <div className={styles.content}>
+            <h3 className={styles.title}>
               <Switch>
-                <Route exact path="/app" component={Home} />
-                <Route exact path="/app/inbox" component={InboxList} />
-                <Route exact path="/app/outbox" component={OutboxList} />
+                <Route exact path="/app" render={() => 'Home'} />
+                <Route exact path="/app/Inbox" render={() => 'Inbox'} />
+                <Route exact path="/app/Outbox" render={() => 'Outbox'} />
               </Switch>
-            </BrowserRouter>
+            </h3>
+            <Switch>
+              <Route exact path="/app" component={Home} />
+              <Route exact path="/app/inbox" component={InboxList} />
+              <Route exact path="/app/outbox" component={OutboxList} />
+              <Redirect to="/app" />
+            </Switch>
           </div>
         </div>
       </div>
@@ -57,4 +53,4 @@ class AppRouter extends Component {
   }
 }
 
-export default AppRouter;
+export default withRouter(AppRouter);

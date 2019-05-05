@@ -3,13 +3,27 @@
 // Используйте HOC withData из `/context/Data` чтобы получить данные.
 
 // Этот компонент должен использовать MailList для отображения данных.
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import MailList from '../MailList';
+import truncate from 'lodash/truncate';
+import { withData } from '../../context/Data';
 
-class OutboxList extends Component {
+class OutboxList extends PureComponent {
   render() {
-    console.log('outbox');
-    return <div />;
+    const {
+      data: { outbox }
+    } = this.props;
+
+    return (
+      <MailList
+        className="t-inbox-list"
+        mails={outbox.map(({ id, body }) => ({
+          title: truncate(body, { length: 55 }),
+          link: `/app/outbox/${id}`,
+          id
+        }))}
+      />
+    );
   }
 }
-export default OutboxList;
+export default withData(OutboxList);

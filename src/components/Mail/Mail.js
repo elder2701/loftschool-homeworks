@@ -1,11 +1,10 @@
-// Изучите файл `/cypress/integration/homework.spec.js`, чтобы понять,
-// какие классы должен использовать компонент.
 import React, { Component } from 'react';
+import styles from './Mail.module.css';
 
 class Mail extends Component {
   render() {
     return (
-      <div className="container">
+      <div className={styles.container}>
         <p className="t-mail-to">
           To: <b />
         </p>
@@ -14,7 +13,5 @@ class Mail extends Component {
     );
   }
 }
-
-// ДОДЕЛАТЬ! Не хватает зачение для тегов "p"
 
 export default Mail;
