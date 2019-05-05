@@ -30,10 +30,14 @@ class AppRouter extends Component {
                 </NavLink>
               </li>
               <li className="navElement">
-                <NavLink to="/app/inbox">Inbox</NavLink>
+                <NavLink exact to="/app/inbox">
+                  Inbox
+                </NavLink>
               </li>
               <li className="navElement">
-                <NavLink to="/app/outbox">Outbox</NavLink>
+                <NavLink exact to="/app/outbox">
+                  Outbox
+                </NavLink>
               </li>
             </ul>
           </nav>
@@ -42,8 +46,8 @@ class AppRouter extends Component {
             <BrowserRouter>
               <Switch>
                 <Route exact path="/app" component={Home} />
-                <Route path="/app/inbox" component={InboxList} />
-                <Route path="/app/outbox" component={OutboxList} />
+                <Route exact path="/app/inbox" component={InboxList} />
+                <Route exact path="/app/outbox" component={OutboxList} />
               </Switch>
             </BrowserRouter>
           </div>

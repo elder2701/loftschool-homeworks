@@ -8,6 +8,7 @@ import MailList from '../MailList';
 
 class InboxList extends Component {
   render() {
+    console.log('Inbox');
     return <div />;
   }
 }

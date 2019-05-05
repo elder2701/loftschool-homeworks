@@ -8,6 +8,7 @@ import MailList from '../MailList';
 
 class OutboxList extends Component {
   render() {
+    console.log('outbox');
     return <div />;
   }
 }
