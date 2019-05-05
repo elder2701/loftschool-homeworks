@@ -6,9 +6,9 @@ import styles from './MailList.module.css';
 
 class MailList extends Component {
   render() {
-    const { mails } = this.props;
+    const { mails, className } = this.props;
     return (
-      <div className={styles.container}>
+      <div className={styles.container + ' ' + className}>
         {mails.map(mail => {
           const { id, link, title } = mail;
           return (

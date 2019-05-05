@@ -16,7 +16,7 @@ class OutboxList extends PureComponent {
 
     return (
       <MailList
-        className="t-inbox-list"
+        className="t-outbox-list"
         mails={outbox.map(({ id, body }) => ({
           title: truncate(body, { length: 55 }),
           link: `/app/outbox/${id}`,

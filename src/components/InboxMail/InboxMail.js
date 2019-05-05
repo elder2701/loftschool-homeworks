@@ -11,8 +11,14 @@ class InboxMail extends PureComponent {
       data
     } = this.props;
     const mail = data.inbox.find(mail => mail.id === id);
-
-    return <Mail {...mail} />;
+    const { body, from } = mail;
+    const infoMail = {
+      body,
+      email: from,
+      prefix: 'From',
+      className: 't-mail-from'
+    };
+    return <Mail {...infoMail} />;
   }
 }
 
