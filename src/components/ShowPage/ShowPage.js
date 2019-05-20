@@ -1,15 +1,33 @@
-// Реализуйте страницу шоу.
-import styles from './ShowPage.module.css';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { showRequest } from '../../actions';
+import styles from './ShowPage.module.css';
 
-// Используйте метод connect и mapStateToProps, mapDispatchToProps,
-// чтобы получить ссылку на поле show вашего стейта
-// и экшн showRequest.
-
-// В методе componentDidMount вам нужно будет диспатчить showRequest action
 class ShowPage extends PureComponent {
+  componentDidMount() {
+    const {
+      showRequest,
+      match: {
+        params: { id }
+      }
+    } = this.props;
+
+    showRequest(id);
+  }
+
+  casts = cast => {
+    return cast === undefined
+      ? null
+      : cast.map(({ person }) => (
+          <div className="t-person" key={person.id}>
+            <p>{person.name}</p>
+            {person.image ? (
+              <img src={person.image.medium} alt={person.name} />
+            ) : null}
+          </div>
+        ));
+  };
+
   render() {
     const innerHTML = html => {
       return { __html: html };
@@ -41,10 +59,7 @@ const mapStateToProps = state => {
     error
   };
 };
-
-const mapDispatchToProps = {
-  showRequest
-};
+const mapDispatchToProps = { showRequest };
 
 export default connect(
   mapStateToProps,

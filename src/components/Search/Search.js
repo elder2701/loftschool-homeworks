@@ -1,61 +1,60 @@
-// Реализуйте страницу поиска.
+import React, { PureComponent } from 'react';
 import styles from './Search.module.css';
-import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import ShowPreview from '../ShowPreview';
 import { getIsFetching, getResult, getError } from '../../reducers/search';
 import { searchRequest } from '../../actions';
 
-// Используйте метод connect и mapStateToProps, mapDispatchToProps,
-// чтобы получить ссылку на поле search вашего стейта
-// и экшн searchRequest.
-
 class Search extends PureComponent {
   state = {
-    serial: ''
+    inputValue: ''
   };
 
   handleChange = e => {
-    const value = e.target.value;
-    this.setState({ serial: value });
+    this.setState({ inputValue: e.target.value });
   };
 
   handleClick = () => {
-    const { serial } = this.state;
+    const { inputValue } = this.state;
     const { searchRequest } = this.props;
 
-    if (serial) {
-      searchRequest(serial);
+    if (inputValue) {
+      searchRequest(inputValue);
     }
-    this.setState({ serial: '' });
+    this.setState({ inputValue: '' });
   };
+
   render() {
-    const { serial } = this.state;
-    const { result, isFetching, error } = this.props;
+    const { inputValue } = this.state;
+    const { isFetching, result, error } = this.props;
+
     if (isFetching) return <p>Выполняется поиск...</p>;
     if (error) return <p>Произошла сетевая ошибка</p>;
 
     return (
-      <Fragment>
+      <div>
         <div className={styles.previewList}>
           <input
+            className={`${styles.input} t-input`}
+            placeholder="Название сериала"
             onChange={this.handleChange}
-            placeholder="Haзвание сериала"
-            className={styles.input}
-            value={serial}
+            value={inputValue}
           />
           <div className={styles.buttonWrapper}>
-            <button className={styles.button + ' t-search-button'}>
+            <button
+              className={`${styles.button} t-search-button`}
+              onClick={this.handleClick}
+            >
               Найти
             </button>
           </div>
         </div>
-        <div className={'t-search-result' + styles.searchPanel}>
+        <div className={`t-search-result ${styles.searchPanel}`}>
           {result.map(item => (
             <ShowPreview key={item.id} {...item} />
           ))}
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

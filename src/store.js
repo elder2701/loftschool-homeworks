@@ -1,7 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
+import searchMiddleware from './middlewares/searchMiddleware';
+import showMiddleware from './middlewares/showMiddleware';
 import reducers from './reducers';
-import { searchMiddleware } from './middlewares/searchMiddleware';
-import { showMiddleware } from './middlewares/showMiddleware';
 
 const getStore = () => {
   return createStore(
@@ -15,5 +15,4 @@ const getStore = () => {
     )
   );
 };
-
 export default getStore;

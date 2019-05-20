@@ -1,14 +1,7 @@
-// Реализуйте showMiddleware
-
-// Вам необходимо обработать showRequest
-// После получения данных с сервера - диспачте showSuccess
-// В случае ошибки showSuccess
-
-// На забудьте вызвать метод next.
-import { showRequest, showSuccess, showFailure } from '../actions/showAction';
+import { showRequest, showSuccess, showFailure } from '../actions';
 import { show } from '../api';
 
-export const showMiddleware = store => next => async action => {
+const showMiddleware = store => next => async action => {
   const result = next(action);
   if (action.type === showRequest.toString()) {
     try {
@@ -20,3 +13,5 @@ export const showMiddleware = store => next => async action => {
   }
   return result;
 };
+
+export default showMiddleware;

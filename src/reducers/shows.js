@@ -1,6 +1,15 @@
-import { showRequest, showSuccess, showFailure } from '../actions/showAction';
-import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
+import { combineReducers } from 'redux';
+import { showRequest, showSuccess, showFailure } from '../actions';
+
+const isFetching = handleActions(
+  {
+    [showRequest]: () => true,
+    [showSuccess]: () => false,
+    [showFailure]: () => false
+  },
+  false
+);
 
 const result = handleActions(
   {
@@ -10,25 +19,16 @@ const result = handleActions(
   []
 );
 
-const isFeaching = handleActions(
-  {
-    [showRequest]: () => false,
-    [showFailure]: () => false,
-    [showRequest]: () => true
-  },
-  false
-);
-
 const error = handleActions(
   {
     [showRequest]: () => null,
-    [showFailure]: (_state, action) => action.payload
+    [showFailure]: (_state, action) => action.error
   },
   null
 );
 
 export default combineReducers({
   result,
-  isFeaching,
+  isFetching,
   error
 });
