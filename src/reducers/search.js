@@ -49,4 +49,4 @@ export const getResult = createSelector(
     }))
 );
 export const getIsFetching = state => state.search.isFeatching;
-export const getError = state => state.seatch.error;
+export const getError = state => state.search.error;
