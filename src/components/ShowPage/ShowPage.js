@@ -52,11 +52,10 @@ class ShowPage extends PureComponent {
 }
 
 const mapStateToProps = state => {
-  const { result, isFetching, error } = state.show;
   return {
-    result,
-    isFetching,
-    error
+    result: state.shows.result,
+    isFetching: state.shows.isFetching,
+    error: state.shows.error
   };
 };
 const mapDispatchToProps = { showRequest };
