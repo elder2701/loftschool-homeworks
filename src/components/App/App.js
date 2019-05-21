@@ -5,7 +5,7 @@ import NasaCard from '../NasaCard';
 import RoversViewer from '../RoversViewer';
 import styles from './App.module.css';
 import { connect } from 'react-redux';
-import { getIsAuthorized, addKey } from '../../modules/Auth';
+import { getApiKey, addKey } from '../../modules/Auth';
 
 class App extends PureComponent {
   handleEnterApiKey = apiKey => {
@@ -40,6 +40,6 @@ class App extends PureComponent {
 }
 
 export default connect(
-  state => ({ isAuthorized: getIsAuthorized(state) }),
+  state => ({ isAuthorized: getApiKey(state) !== '' }),
   { addKey }
 )(App);
