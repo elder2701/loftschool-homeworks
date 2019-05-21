@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import styles from './input.module.css';
+import styles from './Input.module.css';
 import cx from 'classnames';
 
 class input extends PureComponent {
